@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>retieve file</title>
+</head>
+<body>
+    <h1>file retriever</h1>
+    <input type="text" id="cid" placeholder="Enter CID" />
+    <button onclick="fetchFile()">Fetch File</button>
+    <pre id="fileContent"></pre>
+
+    <script>
+        async function fetchFile() {
+            const cid = document.getElementById('cid').value;
+
+                const response = await fetch(`https://ipfs.io/ipfs/${cid}`);
+                if (response.ok) 
+                {
+                    const content = await response.text();
+                    document.getElementById('fileContent').textContent = content;
+                } 
+                
+                else 
+                {
+                    document.getElementById('fileContent').textContent = 'File not there';
+                }
+        }
+    </script>
+</body>
+</html>

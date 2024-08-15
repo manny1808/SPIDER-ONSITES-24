@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>network check</title>
+</head>
+<body>
+    <h1>network availability</h1>
+    <ul id="results"></ul>
+
+    <script>
+        async function checkUrls(urls) {
+            const results = [];
+
+            for (const url of urls) 
+                {
+                    const response = await fetch(url);
+                    if (response.ok)
+                    {
+                        results.push({ url, status: 'Up' });
+                    } 
+                    else
+                    {
+                        results.push({ url, status: `Down (Status Code: ${response.status})` });
+                    }
+                }
+
+            return results;
+            }
+
+        function displayResults(results) {
+            const resultsContainer = document.getElementById('results');
+            results.forEach(result => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${result.url} - ${result.status}`;
+                resultsContainer.appendChild(listItem);
+            });
+        }
+
+        const urlsToCheck = [
+            'https://www.google.com',
+            
+        ];
+
+        checkUrls(urlsToCheck)
+        .then(displayResults)
+        
+    </script>
+</body>
+</html>
